@@ -1,28 +1,16 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import s from './Contact.module.css';
 
-class Contact extends Component {
-  handleDelete = () => {
-    const contactId = this.props.contact.id;
-    this.props.onContactDelete(contactId);
-  };
-
-  render() {
-    const {
-      contact: { name, number },
-    } = this.props;
-
-    return (
-      <div className={s.contact}>
-        <p>{`${name}: ${number}`}</p>
-        <button onClick={this.handleDelete} className={s.deleteButton}>
-          Delete
-        </button>
-      </div>
-    );
-  }
-}
+const Contact = ({ contact: { name, number, id }, onContactDelete }) => {
+  return (
+    <div className={s.contact}>
+      <p>{`${name}: ${number}`}</p>
+      <button onClick={() => onContactDelete(id)} className={s.deleteButton}>
+        Delete
+      </button>
+    </div>
+  );
+};
 
 Contact.propTypes = {
   contact: PropTypes.shape({

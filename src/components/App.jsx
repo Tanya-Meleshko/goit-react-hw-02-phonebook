@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import Section from './Section/Section';
-import Contacts from './Contacts/Contacts';
+import { Contacts } from './Contacts/Contacts';
 import { nanoid } from 'nanoid';
 import Filter from './FIlter/Filter';
 
@@ -13,24 +13,20 @@ export class App extends Component {
 
   onSubmit = (name, number) => {
     const { contacts } = this.state;
-    const updatebleContacts = contacts;
-
-    const repeatedContact = updatebleContacts.find(
-      contact => contact.name === name
-    );
-
+    const repeatedContact = contacts.find(contact => contact.name === name);
     if (repeatedContact) {
       alert(`${name} is already in contacts`);
     } else {
-      updatebleContacts.push({
-        name,
-        number,
-        id: nanoid(),
-      });
-
-      this.setState({
-        contacts: updatebleContacts,
-      });
+      this.setState(prevState => ({
+        contacts: [
+          ...prevState.contacts,
+          {
+            name,
+            number,
+            id: nanoid(),
+          },
+        ],
+      }));
     }
   };
 
@@ -61,7 +57,6 @@ export class App extends Component {
 
   render() {
     const { filter } = this.state;
-
     const visibleContacts = this.getVisibleContacts();
 
     return (
